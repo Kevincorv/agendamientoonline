@@ -22,10 +22,14 @@ export async function middleware(req: NextRequest) {
   const rol = (token?.rol as string | undefined) ?? "";
 
   if ((isStaffArea || isMedicoArea) && !authed) {
-    return NextResponse.redirect(new URL("/admin/login", req.url));
+    const url = new URL("/admin/login", req.url);
+    url.searchParams.set("callbackUrl", req.nextUrl.pathname + req.nextUrl.search);
+    return NextResponse.redirect(url);
   }
   if (isPacienteArea && !authed) {
-    return NextResponse.redirect(new URL("/paciente/login", req.url));
+    const url = new URL("/paciente/login", req.url);
+    url.searchParams.set("callbackUrl", req.nextUrl.pathname + req.nextUrl.search);
+    return NextResponse.redirect(url);
   }
   if (authed) {
     if (isPacienteArea && rol !== "paciente") {
