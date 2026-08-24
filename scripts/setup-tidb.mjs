@@ -24,7 +24,7 @@ const user = decodeURIComponent(u.username);
 const password = decodeURIComponent(u.password);
 const ssl = u.searchParams.get("ssl-mode") || "REQUIRED";
 
-const schemaPath = resolve(ROOT, "..", "database", "schema.tidb.sql");
+const schemaPath = resolve(ROOT, "database", "schema.tidb.sql");
 if (!existsSync(schemaPath)) {
   console.error(`❌ No se encontró el schema en: ${schemaPath}`);
   process.exit(1);

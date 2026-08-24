@@ -1,32 +1,47 @@
-# ─── Legacy PHP (no se commitea) ────────────────────────────
-# Si querés conservar el PHP como referencia, marcá estos archivos
-# con `git add -f` después de creado el repo. Por defecto se ignoran.
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
 
-# Tests PHP
-/login_test.php
-/debug.php
-/test.php
+# Testing
+coverage/
 
-# Backups SQL
-/backups/
+# Next.js
+.next/
+out/
+build/
+dist/
 
-# Logs genéricos
-*.log
+# Production
+*.tsbuildinfo
+next-env.d.ts
+
+# Environment
+.env
+.env*.local
+.env.production
+
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Editor
-.vscode/
-.idea/
-*.swp
-*.swo
-
 # OS
 .DS_Store
 Thumbs.db
-desktop.ini
 
-# Environment genérico
-.env
-.env.backup
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# DB
+*.pem
+backups/
+# Permitir schema SQL de la base
+!database/
+!database/**/*.sql
+!database/*.sql
+
+# Vercel
+.vercel
