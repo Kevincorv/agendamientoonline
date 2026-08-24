@@ -8,6 +8,7 @@ import {
 } from "@/lib/repos/citas";
 import { listarMedicosAdmin } from "@/lib/repos/medicos";
 import { listarEspecialidadesAdmin } from "@/lib/repos/especialidades";
+import { toMysqlDate } from "@/lib/time";
 import { ReportesCliente } from "@/components/admin/reportes-cliente";
 
 export const dynamic = "force-dynamic";
@@ -32,7 +33,7 @@ export default async function ReportesPage({ searchParams }: SP) {
   };
   const pagina = Number(sp.pagina ?? 1) || 1;
 
-  const [stats, porMedico, porEsp, citas, medicos, especialidades] = await Promise.all([
+  const [stats, porMedico, porEsp, citasRaw, medicos, especialidades] = await Promise.all([
     reportesStats(filtros),
     reportesPorMedico(filtros),
     reportesPorEspecialidad(filtros),
@@ -40,6 +41,11 @@ export default async function ReportesPage({ searchParams }: SP) {
     listarMedicosAdmin(),
     listarEspecialidadesAdmin(),
   ]);
+
+  const citas = citasRaw.datos.map((c) => ({
+    ...c,
+    fecha: toMysqlDate(c.fecha),
+  }));
 
   const exportUrl = `/api/admin/citas/exportar?${new URLSearchParams(
     Object.entries(filtros).map(([k, v]) => [k, String(v ?? "")])
@@ -56,8 +62,8 @@ export default async function ReportesPage({ searchParams }: SP) {
       }}
       porMedico={porMedico}
       porEspecialidad={porEsp}
-      citas={citas.datos}
-      paginacion={{ total: citas.total, pagina: citas.pagina, paginas: citas.paginas, porPagina: citas.porPagina }}
+      citas={citas}
+      paginacion={{ total: citasRaw.total, pagina: citasRaw.pagina, paginas: citasRaw.paginas, porPagina: citasRaw.porPagina }}
       filtros={filtros}
       medicos={medicos.map((m) => ({ id: m.id, nombre: m.nombre, apellido: m.apellido }))}
       especialidades={especialidades.map((e) => ({ id: e.id, nombre: e.nombre }))}

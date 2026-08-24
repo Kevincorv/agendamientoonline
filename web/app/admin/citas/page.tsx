@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { listarCitasAdmin } from "@/lib/repos/citas";
 import { listarMedicosAdmin } from "@/lib/repos/medicos";
-import { formatearFecha } from "@/lib/time";
+import { formatearFecha, toMysqlDate } from "@/lib/time";
 import { EstadoBadge } from "@/components/estado-badge";
 import { CitasCliente } from "@/components/admin/citas-cliente";
 
@@ -40,7 +40,7 @@ export default async function AdminCitasPage({ searchParams }: SP) {
     medico_nombre: c.medico_nombre ?? "",
     medico_apellido: c.medico_apellido ?? "",
     especialidad: c.especialidad ?? "",
-    fecha: c.fecha instanceof Date ? c.fecha.toISOString().slice(0, 10) : String(c.fecha),
+    fecha: toMysqlDate(c.fecha),
     hora: String(c.hora ?? "").slice(0, 5),
     estado: c.estado ?? "",
     estado_id: c.estado_id,

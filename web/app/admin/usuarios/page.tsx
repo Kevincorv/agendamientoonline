@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { obtenerRoles, obtenerUsuarios } from "@/lib/repos/usuarios";
 import { UsuariosCliente } from "@/components/admin/usuarios-cliente";
+import { toMysqlDateTime } from "@/lib/time";
 
 export const dynamic = "force-dynamic";
 
@@ -24,8 +25,8 @@ export default async function UsuariosPage() {
         rol_nombre: u.rol_nombre ?? "—",
         activo: u.activo,
         login_attempts: u.login_attempts ?? 0,
-        locked_until: u.locked_until ? (u.locked_until instanceof Date ? u.locked_until.toISOString() : String(u.locked_until)) : null,
-        last_login: u.last_login ? (u.last_login instanceof Date ? u.last_login.toISOString().slice(0, 19).replace("T", " ") : String(u.last_login)) : null,
+        locked_until: u.locked_until ? toMysqlDateTime(u.locked_until) : null,
+        last_login: u.last_login ? toMysqlDateTime(u.last_login) : null,
       }))}
       roles={roles.map((r) => ({ id: (r as { id: number }).id, nombre: (r as { nombre: string }).nombre }))}
     />

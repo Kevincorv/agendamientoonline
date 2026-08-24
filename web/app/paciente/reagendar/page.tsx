@@ -5,7 +5,7 @@ import { obtenerCitaPorId } from "@/lib/repos/citas";
 import { listarMedicosAdmin } from "@/lib/repos/medicos";
 import { listarEspecialidadesAdmin } from "@/lib/repos/especialidades";
 import { generarSlots } from "@/lib/repos/horarios";
-import { todayInTz } from "@/lib/time";
+import { todayInTz, toMysqlDate } from "@/lib/time";
 import { ReagendarCliente } from "@/components/reagendar-cliente";
 
 export const dynamic = "force-dynamic";
@@ -40,7 +40,7 @@ export default async function ReagendarPage({ searchParams }: SP) {
     <ReagendarCliente
       cita={{
         id: cita.id,
-        fecha: cita.fecha,
+        fecha: toMysqlDate(cita.fecha),
         hora: String(cita.hora).slice(0, 5),
         medico_id: cita.medico_id,
         medico_nombre: String(cita.medico_nombre ?? ""),

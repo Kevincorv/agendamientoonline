@@ -81,12 +81,12 @@ export interface Cita {
   motivo: string | null;
   token_cancelacion: string | null;
   notas_medico: string | null;
-  fecha: string;
+  fecha: string | Date;
   hora: string;
   medico_id: number;
   especialidad_id: number | null;
   estado_id: number;
-  creado_en: string;
+  creado_en: string | Date;
   // joins comunes
   medico_nombre?: string | null;
   especialidad_nombre?: string | null;
@@ -96,18 +96,18 @@ export interface Cita {
 
 export interface Feriado {
   id: number;
-  fecha: string;
+  fecha: string | Date;
   motivo: string;
   activo: number;
-  created_at: string;
+  created_at: string | Date;
 }
 
 export interface BloqueoMedico {
   id: number;
   medico_id: number;
-  fecha: string;
+  fecha: string | Date;
   motivo: string | null;
-  created_at: string;
+  created_at: string | Date;
 }
 
 export interface Notificacion {
@@ -117,7 +117,7 @@ export interface Notificacion {
   mensaje: string | null;
   tipo: string;
   leido: number;
-  created_at: string;
+  created_at: string | Date;
 }
 
 export interface Auditoria {
@@ -132,7 +132,7 @@ export interface Auditoria {
   datos_despues: string | null;
   ip: string | null;
   user_agent: string | null;
-  created_at: string;
+  created_at: string | Date;
 }
 
 export interface Sesion {
@@ -141,7 +141,7 @@ export interface Sesion {
   session_token: string;
   ip: string | null;
   user_agent: string | null;
-  created_at: string;
-  last_activity: string;
+  created_at: string | Date;
+  last_activity: string | Date;
   activa: number;
 }

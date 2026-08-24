@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { listarAccionesUnicas, listarAuditoria, listarTablasUnicas } from "@/lib/repos/auditoria";
 import { AuditoriaCliente } from "@/components/admin/auditoria-cliente";
+import { toMysqlDateTime } from "@/lib/time";
 
 export const dynamic = "force-dynamic";
 
@@ -35,9 +36,7 @@ export default async function AuditoriaPage({ searchParams }: SP) {
     <AuditoriaCliente
       logs={listado.datos.map((l) => ({
         ...l,
-        created_at: l.created_at instanceof Date
-          ? l.created_at.toISOString().slice(0, 19).replace("T", " ")
-          : String(l.created_at),
+        created_at: toMysqlDateTime(l.created_at),
       }))}
       paginacion={{ total: listado.total, pagina: listado.pagina, paginas: listado.paginas, porPagina: listado.porPagina }}
       acciones={acciones.map((a) => a.accion)}

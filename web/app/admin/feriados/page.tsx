@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { listarFeriados } from "@/lib/repos/feriados";
 import { FeriadosCliente } from "@/components/admin/feriados-cliente";
+import { toMysqlDate } from "@/lib/time";
 
 export const dynamic = "force-dynamic";
 
@@ -16,7 +17,7 @@ export default async function FeriadosPage() {
     <FeriadosCliente
       feriados={feriados.map((f) => ({
         id: f.id,
-        fecha: f.fecha instanceof Date ? f.fecha.toISOString().slice(0, 10) : String(f.fecha),
+        fecha: toMysqlDate(f.fecha),
         motivo: f.motivo,
         activo: f.activo,
       }))}

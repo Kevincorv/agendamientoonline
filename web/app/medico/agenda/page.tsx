@@ -3,6 +3,7 @@ import { auth } from "@/lib/auth";
 import { obtenerMedicoPorUsuarioId } from "@/lib/repos/medicos";
 import { citasDelMedico } from "@/lib/repos/citas";
 import { MedicoAgendaCliente } from "@/components/medico-agenda-cliente";
+import { toMysqlDate } from "@/lib/time";
 
 export const dynamic = "force-dynamic";
 
@@ -19,8 +20,9 @@ export default async function MedicoAgendaPage() {
   // Agrupar por fecha
   const porFecha: Record<string, Array<{ id: number; nombre_paciente: string; hora: string; telefono: string; estado: string; estado_id: number; motivo: string }>> = {};
   for (const c of citas) {
-    if (!porFecha[c.fecha]) porFecha[c.fecha] = [];
-    porFecha[c.fecha].push({
+    const fecha = toMysqlDate(c.fecha);
+    if (!porFecha[fecha]) porFecha[fecha] = [];
+    porFecha[fecha].push({
       id: c.id,
       nombre_paciente: c.nombre_paciente,
       hora: String(c.hora).slice(0, 5),

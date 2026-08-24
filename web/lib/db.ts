@@ -27,7 +27,8 @@ export const pool: mysql.Pool = dbConfig.url
 
 // Sincronizar timezone de MySQL con PHP (America/Asuncion)
 pool.on("connection", (conn) => {
-  conn.promise().query(`SET time_zone = '${env.timezone}'`).catch(() => {
+  // @ts-expect-error - la firma de mysql2 difiere entre la API de pool y la promesa
+  conn.query?.(`SET time_zone = '${env.timezone}'`, () => {
     /* TiDB puede no aceptar el nombre; ignoramos */
   });
 });

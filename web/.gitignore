@@ -45,3 +45,6 @@ backups/
 
 # Vercel
 .vercel
+
+.vercel
+.env*
