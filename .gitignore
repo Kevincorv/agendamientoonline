@@ -1,0 +1,32 @@
+# ─── Legacy PHP (no se commitea) ────────────────────────────
+# Si querés conservar el PHP como referencia, marcá estos archivos
+# con `git add -f` después de creado el repo. Por defecto se ignoran.
+
+# Tests PHP
+/login_test.php
+/debug.php
+/test.php
+
+# Backups SQL
+/backups/
+
+# Logs genéricos
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environment genérico
+.env
+.env.backup
